@@ -42,6 +42,9 @@ def get_most_common_words(words, n=10):
     return counts.most_common(n)
 
 
+def pos(text)
+
+
 def main():
     # Step 1: Load text
     text = load_text("gita_intro.txt")    
