@@ -16,6 +16,9 @@ from nltk import FreqDist
 from wordcloud import WordCloud
 from nltk.collocations import BigramCollocationFinder
 from nltk.metrics import BigramAssocMeasures
+from nltk.tree import Tree
+from nltk.corpus import stopwords
+
 
 
 # Load the text file
@@ -98,6 +101,21 @@ def plot_pos_distribution(tokens):
     plt.tight_layout()
     plt.show()
 
+def extract_named_entities(text):
+    tokens = word_tokenize(text)
+    pos_tags = pos_tag(tokens)
+    tree = ne_chunk(pos_tags, binary=False)
+
+    named_entities = []
+
+    for subtree in tree:
+        if isinstance(subtree, Tree):
+            entity_name = " ".join([token for token, pos in subtree.leaves()])
+            entity_type = subtree.label()
+            named_entities.append((entity_name, entity_type))
+    return named_entities
+
+
 
 # Main function to extract bigrams with PMI
 def find_top_pmi_bigrams(words, top_n=20):
@@ -125,7 +143,10 @@ def main():
 
     # Step 2: Tokenize
     tokens = tokenize(text)
+    #print(tokens)
 
+    ner = extract_named_entities(text)
+    print(ner)
     #fdist = FreqDist(tokens)
     #print(tokens)
     #print(fdist["Krishna"])
@@ -143,13 +164,13 @@ def main():
     # Step 3: Define custom stopwords (Hindi example)
     #hindi_stopwords = {'और', 'का', 'है', 'में', 'कि', 'से', 'को', 'पर', 'था', 'थी'}
 
-    custom_stopwords = set(stopwords.words('english'))
+    #custom_stopwords = set(stopwords.words('english'))
 
     # Step 4: Clean + Lemmatize
 
-    tokens = clean_tokens(tokens, custom_stopwords=custom_stopwords)
+    #tokens = clean_tokens(tokens, custom_stopwords=custom_stopwords)
 
-    find_top_pmi_bigrams(tokens)
+    #find_top_pmi_bigrams(tokens)
     #lemmatized, tagged = clean_tokens(tokens, custom_stopwords=custom_stopwords)
     #print("Lemmatized Words (Sample):", lemmatized[:20])
     #print("\nPOS Tagged Words (Sample):", tagged[:20])
