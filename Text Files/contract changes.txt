@@ -1,0 +1,7 @@
+action :
+90 days
+ l1 notification mail to be changed			ZCONTRACT_L1_90
+ employee intimation mail to be added 
+ l1escdt change from prv contdt- 15 To begda + 30	""476 ZIHR_CONTRACT_MAIL_FRM
+ l1 reminder mail to be changed (7 days)
+ 
